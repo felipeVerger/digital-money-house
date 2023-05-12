@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import { InputS, Label } from '../RegisterStyle'
+import { ErrorMessage, InputS, Label } from '../RegisterStyle'
 import { useFormContext } from 'react-hook-form';
 
 interface InputProps {
@@ -7,9 +7,10 @@ interface InputProps {
   name: string;
   placeholder: string
   id: string
+  errorText?: string 
 }
 
-const Input: FC<InputProps> = ({ type, name, id, placeholder }) => {
+const Input: FC<InputProps> = ({ type, name, id, placeholder, errorText }) => {
     const { register } = useFormContext();
 
   return (
@@ -20,6 +21,7 @@ const Input: FC<InputProps> = ({ type, name, id, placeholder }) => {
             id={id} 
             placeholder={placeholder} 
         />
+        <ErrorMessage>{errorText}</ErrorMessage>
     </Label>
   )
 }
