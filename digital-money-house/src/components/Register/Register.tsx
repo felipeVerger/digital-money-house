@@ -25,7 +25,7 @@ const Register = () => {
                 </FormBlock>
                 <FormBlock>
                     <Input name='password' id='password' type='password' placeholder='Contraseña*'/>
-                    <Input name='confirmarContraseña' id='confirmarContraseña' type='password' placeholder='Confirmar contraseña*'/>
+                    <Input name='confirmPassword' id='confirmPassword' type='password' placeholder='Confirmar contraseña*'/>
                 </FormBlock>
                 <FormBlock>
                     <Input name='phone' id='phone' type='text' placeholder='Telefono*'/>
