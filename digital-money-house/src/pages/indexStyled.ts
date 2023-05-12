@@ -4,40 +4,29 @@ export const MainContainer = styled.main`
     display: flex;
     flex-direction: column;
     height: 100%;
-    width: 100%;
+    width: 100vw;
     position: relative;
-`
-
-export const BackgroundContainer = styled.div`
-    width: 100%;
-    height: 100%;
-    position:absolute;
-    z-index: -10;
+    overflow-y: auto;
 `
 
 export const ImageBackground = styled.img`
     width: 100%;
     height: 100%;
+    position:absolute;
+    z-index: -10;
     object-fit: cover;
+    object-position: 50% 45%;
 `
 
-export const FrontContainer = styled.div`
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    
-`
-/**********Card up title**********/
+/**********Card title**********/
 
-export const CardTitle = styled.div`
+export const CardTitle = styled.section`
     align-self: flex-start;
-    width: 50%;
+    width: 55%;
     height: 50%;
-    padding: 60px 0px 0px 0px;
+    padding-top: 60px;
     margin-left: 5%;
-    /* word-wrap: break-word; */
+
     @media (min-width: 1440px) {
         width: 35%;
     }
@@ -69,22 +58,19 @@ export const LineTitle = styled.div`
 
 export const Subtitle = styled.p`
     color:${(props => props.theme.secondary)};
-    font-size: 28px;
+    font-size: 26px;
     font-weight: 400;
-
-    &.bold  {
-        font-weight: 700;
-    }
 `
 
-/**********Card down services**********/
+/**********Services**********/
 
-export const CardServicesContainer = styled.div`
+export const ServicesContainer = styled.section`
     width: 100%;
     height: 50%;
     display: flex;
     flex-direction: column;
     align-items: center;
+    position: relative;
 
     @media (min-width: 1440px) {
         flex-direction: row;
@@ -92,53 +78,9 @@ export const CardServicesContainer = styled.div`
     }
 `
 
-export const CardServices = styled.div`
-    background-color: white;
-    border-radius: 25px;
-    width: 90%;
-    padding: 20px 20px;
-    margin-bottom: 20px;
-
-    @media (min-width: 768px) {
-        width: 70%;
-    }
-
-    @media (min-width: 1440px) {
-        align-self: flex-start;
-        margin-bottom: 0px;
-        width: 35%;
-        min-height: 75%;
-        margin-left: 10px;
-        padding: 30px 30px;
-    }
-`
-
-export const ServiceTitle = styled.h3`
-    color: ${(props => props.theme.primary)};
-    font-size: 28px;
-    font-weight: 700;
-
-    @media (min-width: 768px) {
-        font-size: 34px;
-    }
-`
-
-export const ServiceLine = styled.div`
-    width: 100%;
-    height: 3px;
-    background-color: ${(props => props.theme.secondary)};
-    margin: 10px 0;
-`
-
-export const ServiceDescription = styled.p`
-    color: ${(props => props.theme.primary)};
-    font-size: 20px;
-    font-weight: 500;
-`
-
 export const GreenBackground = styled.div`
     width: 100%;
-    height: 45%;
+    height: 90%;
     background-color: ${(props => props.theme.secondary)};
     border-top-left-radius: 50px;
     border-top-right-radius: 50px;
@@ -148,10 +90,10 @@ export const GreenBackground = styled.div`
     z-index: -5;
 
     @media (min-width: 768px) {
-        height: 45%;
+        height: 87%;
     }
 
     @media (min-width: 1440px) {
-        height: 35%;
+        height: 80%;
     }
 `
