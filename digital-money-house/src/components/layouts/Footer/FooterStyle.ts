@@ -2,17 +2,21 @@ import styled from 'styled-components';
 
 export const FooterContainer = styled.footer`
     width: 100vw;
-    height: 64px;
+    min-height: 64px;
     background-color: ${(props => props.theme.tertiary)};
+    display: block;
 `
 
 export const FooterBody = styled.div`
     width: 100%;
     height: 100%;
     display: flex;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
     padding-left: 1rem;
+    @media screen and (min-width: 390px){
+        justify-content: flex-start;
+    }
 `
 
 export const FooterContent = styled.p`
