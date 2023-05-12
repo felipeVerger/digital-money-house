@@ -87,3 +87,8 @@ export const SubmitButton = styled.button`
         height: 64px;
     }
 `
+
+export const ErrorMessage = styled.small`
+    color: red;
+    font-size: 14px;
+`
