@@ -26,9 +26,14 @@ export const CardTitle = styled.section`
     height: 50%;
     padding-top: 60px;
     margin-left: 5%;
+    margin-bottom: 12rem;
 
     @media (min-width: 1440px) {
         width: 35%;
+        margin-bottom: 0;
+    }
+    @media (min-width: 580px) {
+        margin-bottom: 4rem;
     }
 `
 
@@ -66,7 +71,7 @@ export const Subtitle = styled.p`
 
 export const ServicesContainer = styled.section`
     width: 100%;
-    height: 50%;
+    height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -75,6 +80,7 @@ export const ServicesContainer = styled.section`
     @media (min-width: 1440px) {
         flex-direction: row;
         justify-content: center;
+        height: 50%;
     }
 `
 
