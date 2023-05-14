@@ -4,6 +4,7 @@ export const themes = {
       secondary: "#C1FD35",
       tertiary: "#3A393E",
       cuartiary: "#EEEAEA",
+      error: '#DA0000'
     },
 };
   
