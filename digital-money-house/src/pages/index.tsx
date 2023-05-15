@@ -1,9 +1,12 @@
 import Head from 'next/head';
-import { MainContainer, ImageBackground, ServicesContainer, CardTitle, GreenBackground, LineTitle, Subtitle, Title } from './indexStyled';
+import { MainContainer, ServicesContainer, CardTitle, GreenBackground, LineTitle, Subtitle, Title, ImgTabletDesktop, ImgMobile } from './indexStyled';
 import CardHome from '@/components/CardHome/CardHome';
 import { data } from '../assets/dataLanding';
+import useMediaQuery from '@/hooks/useMediaQuery';
 
 const Home = () => {
+  const isMobile = useMediaQuery('(max-width: 768px)');
+
   return (
     <>
       <Head>
@@ -13,7 +16,17 @@ const Home = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <MainContainer>
-        <ImageBackground src="/landingMobile.png" alt="image background" />
+        {isMobile ? (
+          <ImgMobile
+            src="/landingMobile.png"
+            alt="image background" 
+          />
+        ) : (
+          <ImgTabletDesktop
+            src="/landingDesktopTablet.png"
+            alt="image background"
+          />
+        )}
         <CardTitle>
           <Title>De ahora en adelante, hacés más con tu dinero</Title>
           <LineTitle />
