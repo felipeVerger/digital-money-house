@@ -1,10 +1,10 @@
-import { themes } from '@/assets/theme'
+import { screenSize, themes } from '@/assets/theme'
 import styled from 'styled-components'
 
 export const LoginContainer = styled.main`
     background-color : ${themes.light.tertiary};
     width: 100vw;
-    height: 100vh;
+    height: calc(100vh - 128px);
     display: flex;
     justify-content: center;
     background-color: #272727;    
@@ -22,7 +22,10 @@ export const LoginForm = styled.form `
         color: #FFF;
         margin-bottom: 35px
     };
-    input{
+    @media (min-width: ${screenSize.tablet}) {
+        width: 360px;
+    }
+    /* input{
         &:-webkit-autofill,
         &:-webkit-autofill:hover,
         &:-webkit-autofill:focus,
@@ -30,7 +33,6 @@ export const LoginForm = styled.form `
             transition: "color 9999s ease-out, background-color 9999s ease-out";
             transition-delay: 9999s; 
     }    
-    }
-
+    } */  
 
 `

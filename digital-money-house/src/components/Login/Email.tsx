@@ -18,8 +18,12 @@ const Email : FC<Props>= ({setIsValidEmail}) => {
     const email = useWatch({name :'email'})
 
     const [responseValidation , setResponseValidation] = useState<LoginResponse>({})
+    
 
     const disabled = email.length === 0
+    const inputError = !!responseValidation?.error
+
+    
   
        const validateEmail = async() => {
         const { email } = getValues()
@@ -30,9 +34,7 @@ const Email : FC<Props>= ({setIsValidEmail}) => {
         catch( e : any){
             console.log(e);            
         }
-      }
-      console.log(email.length);
-      
+      }     
 
       useEffect(()=>{
         if(responseValidation.error === "invalid credentials") {        
@@ -40,11 +42,12 @@ const Email : FC<Props>= ({setIsValidEmail}) => {
           setIsValidEmail(true); 
         }
       },[responseValidation.error])
+      
 
     return (
         <>
             <h1>¡Hola! Ingresá tu e-mail</h1>
-            <Input type='text' placeholder='Correo electrónico' {...register('email')} />
+            <Input type='text' placeholder='Correo electrónico' {...register('email')} error={inputError}/>
             <Button onClick={validateEmail} type='button' disabled={disabled}>Continuar</Button>
             <Button onClick={()=> router.push('/register')} newAccount>Crear cuenta</Button>
             {responseValidation?.error && <ErrorMessage>Usuario inexistente. Vuelve a intentarlo</ErrorMessage>}    

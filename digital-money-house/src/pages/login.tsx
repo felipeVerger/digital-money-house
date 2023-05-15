@@ -8,6 +8,7 @@ import { useForm, FormProvider } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup';
 import { loginSchema } from '@/components/Login/features/login.schema'
 import { LoginContainer, LoginForm } from './loginStyle'
+import { useRouter } from 'next/router'
 
 const LoginPage = () => {
 
@@ -25,6 +26,8 @@ const LoginPage = () => {
     })
     const {handleSubmit, getValues} = methods    
     const [responseValidation , setResponseValidation] = useState<LoginResponse>({})   
+
+    const router = useRouter()
     
     const onSubmit = async() => {
         const {email, password} = getValues()
@@ -36,7 +39,11 @@ const LoginPage = () => {
         catch( e : any){
           console.log(e);          
       }             
-    }   
+    }  
+    
+    useEffect(() => {
+      responseValidation.token && router.push('/')
+    },[responseValidation])
     
   return (
     <LoginContainer>        

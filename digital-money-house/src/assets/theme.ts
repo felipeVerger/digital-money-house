@@ -7,4 +7,10 @@ export const themes = {
       error: '#DA0000'
     },
 };
+
+export const screenSize = {
+  tablet : '768px',
+  laptop : '1024px',
+  laptopL : '1440px'
+}
   
