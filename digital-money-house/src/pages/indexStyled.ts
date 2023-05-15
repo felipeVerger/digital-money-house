@@ -9,13 +9,29 @@ export const MainContainer = styled.main`
     overflow-y: auto;
 `
 
-export const ImageBackground = styled.img`
+export const ImgMobile = styled.img`
     width: 100%;
     height: 100%;
     position:absolute;
-    z-index: -10;
+    z-index: -2;
     object-fit: cover;
     object-position: 50% 45%;
+`
+
+export const ImgTabletDesktop = styled.img`
+    width: 100%;
+    height: 100%;
+    position:absolute;
+    z-index: -2;
+    object-fit: cover;
+
+    @media (min-width: 768px) {
+        object-position: left;
+    }
+
+    @media (min-width: 1024px) {
+        object-position: left top;
+    }
 `
 
 /**********Card title**********/
@@ -93,7 +109,7 @@ export const GreenBackground = styled.div`
     position: absolute;
     bottom: 0;
     left:0;
-    z-index: -5;
+    z-index: -1;
 
     @media (min-width: 768px) {
         height: 87%;

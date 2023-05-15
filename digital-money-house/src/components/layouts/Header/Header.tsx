@@ -25,16 +25,18 @@ const Header:FC = () => {
                   <Logo src={LogoHome} alt='logo' width={"86.31"} height={"33"}/>
                 )}
             </LogoContainer>
-            <HeaderBlock>
-              <LoginButton href="/login" switchStyle={switchStyle}>
-                {switchStyle ? 'Iniciar sesión' : "Ingresar"}
-              </LoginButton>
-              {!switchStyle && (
-                <RegisterButton href="/register">
-                  Crear cuenta
-                </RegisterButton>
-              )}
-            </HeaderBlock>
+            {actualPage !== '/login' &&            
+              <HeaderBlock>
+                <LoginButton href="/login" switchStyle={switchStyle}>
+                  {switchStyle ? 'Iniciar sesión' : "Ingresar"}
+                </LoginButton>
+                {!switchStyle && (
+                  <RegisterButton href="/register">
+                    Crear cuenta
+                  </RegisterButton>
+                )}
+              </HeaderBlock>
+            }
         </HeaderBody>
     </HeaderContainer>
   )
