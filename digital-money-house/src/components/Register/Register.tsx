@@ -41,16 +41,17 @@ const Register = () => {
         code,
       }),
     });
+    localStorage.setItem("code", String(code));
+    localStorage.setItem("isVerified", "false");
 
     if (response.status !== 200) {
-      setError("Error al crear la cuenta");
-      setLoading(false);
-      return;
+      setError(
+        "Hubo un error al enviar el código de verificación, por favor intente nuevamente"
+      );
+      return setLoading(false);
     }
 
     setLoading(false);
-    localStorage.setItem("code", String(code));
-    localStorage.setItem("isVerified", "false");
 
     return true;
   };
@@ -69,15 +70,12 @@ const Register = () => {
         password,
         phone,
       });
-
-      if (response.error || response.status !== 200) {
-        setError(
-          "Hubo un error al crear la cuenta, por favor verifique los datos ingresados e intente nuevamente"
-        );
+      if (response.error) {
+        setError(response.error?.message);
         return setLoading(false);
       }
-
-      router.push("/register/successful");
+      setLoading(false);
+      return router.push("/register/successful");
     }
   };
 

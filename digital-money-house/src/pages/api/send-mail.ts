@@ -10,7 +10,7 @@ export default async function handler(
   try {
     await sendgrid.send({
       to: req.body.email,
-      from: "gian.donofrio2000@gmail.com",
+      from: "registro.dmh.equipo9@gmail.com",
       subject: "Confimación de registro - Digital Money House",
       html: `
         <div>
@@ -18,6 +18,11 @@ export default async function handler(
           <p>Your verification code is: ${req.body.code}</p>
         </div>
       `,
+      mailSettings: {
+        sandboxMode: {
+          enable: true,
+        },
+      },
     });
   } catch (error: any) {
     console.error(error);

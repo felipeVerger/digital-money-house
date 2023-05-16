@@ -55,7 +55,7 @@ const LoginPage = () => {
       <FormProvider {...methods}>
         <LoginForm onSubmit={handleSubmit(onSubmit)}>
           {!isValidEmail ? (
-            <Email setIsValidEmail={setIsValidEmail} />
+            <Email setIsValidEmail={setIsValidEmail} setLoading={setLoading} />
           ) : (
             <Pass error={responseValidation?.error} />
           )}
