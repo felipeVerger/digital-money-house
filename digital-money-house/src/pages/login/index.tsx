@@ -9,10 +9,12 @@ import { loginSchema } from "@/components/Login/features/login.schema";
 import { LoginContainer, LoginForm } from "./loginStyle";
 import { useRouter } from "next/router";
 import Spinner from "@/components/Spinner/Spinner";
+import CryptoJS from "crypto-js";
 
 const LoginPage = () => {
   const [isValidEmail, setIsValidEmail] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
+  const secretKey = process.env.NEXT_PUBLIC_SECRET_KEY;
 
   const methods = useForm({
     mode: "all",
@@ -31,17 +33,23 @@ const LoginPage = () => {
 
   const onSubmit = async () => {
     const { email, password } = getValues();
-    const isVerified = localStorage.getItem("isVerified");
 
     try {
       setLoading(true);
+      const encryptedIsVerified = localStorage.getItem("isVerified");
+      const decryptedIsVerified = CryptoJS.AES.decrypt(
+        encryptedIsVerified as string,
+        secretKey as string
+      ).toString(CryptoJS.enc.Utf8);
+
       const response = await getLogin({ email, password });
       setResponseValidation(response);
-      if (response.token && isVerified === "false") {
+
+      if (response.token && decryptedIsVerified === "false") {
         return router.push("/verify");
       }
-      if (response.token && isVerified === "true") {
-        return router.push("/home");
+      if (response.token && decryptedIsVerified === "true") {
+        return router.push("/dashboard");
       }
 
       setLoading(false);

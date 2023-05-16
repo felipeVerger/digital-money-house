@@ -9,6 +9,7 @@ import {
 } from "@/components/Register/RegisterStyle";
 import { useRouter } from "next/router";
 import { useState } from "react";
+import CryptoJS from "crypto-js";
 
 const Verify = () => {
   const router = useRouter();
@@ -20,15 +21,26 @@ const Verify = () => {
   });
 
   const onSubmit = () => {
-    const code = localStorage.getItem("code");
+    const encryptedCode = localStorage.getItem("code");
+    const secretKey = process.env.NEXT_PUBLIC_SECRET_KEY;
+    const decryptedCode = CryptoJS.AES.decrypt(
+      encryptedCode as string,
+      secretKey as string
+    ).toString(CryptoJS.enc.Utf8);
+
     setErrors({
       text: "",
       error: false,
     });
 
-    if (code === codeInput) {
-      localStorage.setItem("isVerified", "true");
-      return router.push("/home");
+    if (decryptedCode === codeInput) {
+      let encryptedIsVerified = CryptoJS.AES.encrypt(
+        "true",
+        secretKey as string
+      ).toString();
+
+      localStorage.setItem("isVerified", encryptedIsVerified);
+      router.push("/home");
     }
     setErrors({
       text: "El código ingresado es incorrecto",

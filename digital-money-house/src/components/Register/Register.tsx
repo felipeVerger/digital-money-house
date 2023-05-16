@@ -14,6 +14,7 @@ import Input from "./Input/Input";
 import { registerUser } from "@/services/register/register.service";
 import { useRouter } from "next/router";
 import Spinner from "../Spinner/Spinner";
+import CryptoJS from "crypto-js";
 
 const Register = () => {
   const router = useRouter();
@@ -29,7 +30,10 @@ const Register = () => {
     setLoading(true);
     setError("");
     const { email } = getValues();
-    const code = Math.floor(100000 + Math.random() * 900000);
+    const code = Math.floor(100000 + Math.random() * 900000).toString();
+    const secretKey = process.env.NEXT_PUBLIC_SECRET_KEY;
+
+
 
     const response = await fetch("/api/send-mail", {
       method: "POST",
@@ -41,8 +45,17 @@ const Register = () => {
         code,
       }),
     });
-    localStorage.setItem("code", String(code));
-    localStorage.setItem("isVerified", "false");
+    let encryptedCode = CryptoJS.AES.encrypt(
+      code,
+      secretKey as string
+    ).toString();
+    let encryptedIsVerified = CryptoJS.AES.encrypt(
+      "false",
+      secretKey as string
+    ).toString();
+
+    localStorage.setItem("code", encryptedCode);
+    localStorage.setItem("isVerified", encryptedIsVerified);
 
     if (response.status !== 200) {
       setError(
