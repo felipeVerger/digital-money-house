@@ -6,36 +6,78 @@ import {
   Form,
   FormBlock,
   SubmitButton,
+  PasswordAdvice,
+  ErrorMessage,
 } from "./RegisterStyle";
 import { useFormContext } from "react-hook-form";
 import Input from "./Input/Input";
-import { log } from "console";
+import { registerUser } from "@/services/register/register.service";
+import { useRouter } from "next/router";
+import Spinner from "../Spinner/Spinner";
 
 const Register = () => {
+  const router = useRouter();
+  const [error, setError] = React.useState("");
+  const [loading, setLoading] = React.useState(false);
   const {
     handleSubmit,
+    getValues,
     formState: { errors },
   } = useFormContext();
 
-  const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const code = Math.floor(Math.random() * (999999 - 100000)) + 100000;
-    const resp = await fetch("/api/sendVerificationCode", {
+  const handleVerficationCode = async () => {
+    setLoading(true);
+    setError("");
+    const { email } = getValues();
+    const code = Math.floor(100000 + Math.random() * 900000);
+
+    const response = await fetch("/api/send-mail", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        email: e.currentTarget.email.value,
+        email,
         code,
       }),
     });
 
-    if (resp.status === 200) {
-      const data = await resp.json();
-      localStorage.setItem("code", code.toString());
-      localStorage.setItem("isVerified", "false");
-      console.log(data);
+    if (response.status !== 200) {
+      setError("Error al crear la cuenta");
+      setLoading(false);
+      return;
+    }
+
+    setLoading(false);
+    localStorage.setItem("code", String(code));
+    localStorage.setItem("isVerified", "false");
+
+    return true;
+  };
+
+  const onSubmit = async () => {
+    setLoading(true);
+    setError("");
+    const { dni, email, firstname, lastname, password, phone } = getValues();
+    const verificationCode = await handleVerficationCode();
+    if (verificationCode) {
+      const response = await registerUser({
+        dni,
+        email,
+        firstname,
+        lastname,
+        password,
+        phone,
+      });
+
+      if (response.error || response.status !== 200) {
+        setError(
+          "Hubo un error al crear la cuenta, por favor verifique los datos ingresados e intente nuevamente"
+        );
+        return setLoading(false);
+      }
+
+      router.push("/register/successful");
     }
   };
 
@@ -43,7 +85,7 @@ const Register = () => {
     <RegisterContainer>
       <RegisterBody>
         <Title>Crear cuenta</Title>
-        <Form onSubmit={handleFormSubmit}>
+        <Form onSubmit={handleSubmit(onSubmit)}>
           <FormBlock>
             <Input
               name="firstname"
@@ -72,7 +114,7 @@ const Register = () => {
             <Input
               name="dni"
               id="dni"
-              type="number"
+              type="text"
               placeholder="DNI*"
               errorText={String(
                 errors.dni?.message === undefined ? "" : errors.dni?.message
@@ -88,6 +130,10 @@ const Register = () => {
               )}
             />
           </FormBlock>
+          <PasswordAdvice>
+            Usa entre 6 y 20 carácteres (debe contener al menos al menos 1
+            carácter especial, una mayúscula y un número)
+          </PasswordAdvice>
           <FormBlock>
             <Input
               name="password"
@@ -124,7 +170,17 @@ const Register = () => {
             />
             <SubmitButton type="submit">Crear cuenta</SubmitButton>
           </FormBlock>
+          {error && (
+            <ErrorMessage
+              style={{
+                textAlign: "center",
+              }}
+            >
+              {error}
+            </ErrorMessage>
+          )}
         </Form>
+        {loading && <Spinner />}
       </RegisterBody>
     </RegisterContainer>
   );

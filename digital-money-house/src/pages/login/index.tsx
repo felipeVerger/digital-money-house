@@ -1,0 +1,69 @@
+import Email from "@/components/Login/Email";
+import Pass from "@/components/Login/Pass";
+import { getLogin } from "@/services/login/login.service";
+import { LoginResponse } from "@/types/login.types";
+import React, { useEffect, useState } from "react";
+import { useForm, FormProvider } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { loginSchema } from "@/components/Login/features/login.schema";
+import { LoginContainer, LoginForm } from "./loginStyle";
+import { useRouter } from "next/router";
+import Spinner from "@/components/Spinner/Spinner";
+
+const LoginPage = () => {
+  const [isValidEmail, setIsValidEmail] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const methods = useForm({
+    mode: "all",
+    resolver: yupResolver(loginSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
+  const { handleSubmit, getValues } = methods;
+  const [responseValidation, setResponseValidation] = useState<LoginResponse>(
+    {}
+  );
+
+  const router = useRouter();
+
+  const onSubmit = async () => {
+    const { email, password } = getValues();
+    const isVerified = localStorage.getItem("isVerified");
+
+    try {
+      setLoading(true);
+      const response = await getLogin({ email, password });
+      setResponseValidation(response);
+      if (response.token && isVerified === "false") {
+        return router.push("/verify");
+      }
+      if (response.token && isVerified === "true") {
+        return router.push("/home");
+      }
+
+      setLoading(false);
+    } catch (e: any) {
+      console.log(e);
+    }
+  };
+
+  return (
+    <LoginContainer>
+      <FormProvider {...methods}>
+        <LoginForm onSubmit={handleSubmit(onSubmit)}>
+          {!isValidEmail ? (
+            <Email setIsValidEmail={setIsValidEmail} />
+          ) : (
+            <Pass error={responseValidation?.error} />
+          )}
+        </LoginForm>
+      </FormProvider>
+      {loading && <Spinner />}
+    </LoginContainer>
+  );
+};
+
+export default LoginPage;

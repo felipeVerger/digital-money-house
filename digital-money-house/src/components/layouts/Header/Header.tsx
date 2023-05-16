@@ -5,10 +5,10 @@ import { useRouter } from 'next/router'
 
 const Header:FC = () => {
   const [switchStyle, setSwitchStyle] = useState<boolean>(false);
-  const actualPage:string = useRouter().pathname;
+  const actualPage:string = useRouter().pathname;  
 
   useEffect(() => {
-    if(actualPage === '/login' || actualPage === '/register'){
+    if(actualPage === '/login' || actualPage === '/register' || actualPage === "/register/successful"){
       setSwitchStyle(true);
     } else {
       setSwitchStyle(false);
@@ -25,7 +25,7 @@ const Header:FC = () => {
                   <Logo src={LogoHome} alt='logo' width={"86.31"} height={"33"}/>
                 )}
             </LogoContainer>
-            {actualPage !== '/login' &&            
+            {actualPage !== '/login' && actualPage !== "/register/successful" &&           
               <HeaderBlock>
                 <LoginButton href="/login" switchStyle={switchStyle}>
                   {switchStyle ? 'Iniciar sesión' : "Ingresar"}
