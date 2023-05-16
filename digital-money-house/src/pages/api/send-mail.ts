@@ -18,11 +18,11 @@ export default async function handler(
           <p>Your verification code is: ${req.body.code}</p>
         </div>
       `,
-      // mailSettings: {
-      //   sandboxMode: {
-      //     enable: true,
-      //   },
-      // },
+      mailSettings: {
+        sandboxMode: {
+          enable: true,
+        },
+      },
     });
   } catch (error: any) {
     console.error(error);
