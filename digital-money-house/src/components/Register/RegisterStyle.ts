@@ -67,6 +67,7 @@ export const InputS = styled.input`
     border-radius: 10px;
     text-indent: 15px;
     font-family: 'Open Sans';
+    color: ${props => props.theme.primary};
     font-weight: 400;
     font-size: 16px;
     line-height: 134.77%;
@@ -83,8 +84,23 @@ export const SubmitButton = styled.button`
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
     margin-bottom: 2rem;
+    cursor: pointer;
     @media screen and (min-width: 768px) {
         height: 64px;
+    }
+`
+
+export const PasswordAdvice = styled.p`
+    margin-top: 0;
+    margin-bottom: -10px;
+    font-family: 'Open Sans';
+    font-weight: 400;
+    font-size: 15.2px;
+    line-height: 140.62%;
+    color: #EEEAEA;
+    @media screen and (min-width: 768px) {
+        margin-top: -15px;
+        margin-bottom: -25px;
     }
 `
 
