@@ -1,13 +1,25 @@
 import React from 'react'
-import { RegisterContainer, RegisterBody, Title, Form, FormBlock, SubmitButton } from './RegisterStyle'
+import { RegisterContainer, RegisterBody, Title, Form, FormBlock, SubmitButton, PasswordAdvice } from './RegisterStyle'
 import { useFormContext } from 'react-hook-form'
 import Input from './Input/Input';
+import { registerUser } from '@/services/register/register.service';
+import { useRouter } from 'next/router';
 
 const Register = () => {
-  const { handleSubmit, formState: { errors } } = useFormContext();
+  const router = useRouter();
+  const { handleSubmit, getValues, formState: { errors } } = useFormContext();
 
-  const onSubmit = async (data: any) => {
-    console.log(data);
+  const onSubmit = async () => {
+    const { dni, email, firstname, lastname, password, phone } = getValues();
+    
+    try {
+      const response = await registerUser({dni, email, firstname, lastname, password, phone});
+      if (response.user_id && response.account_id) {
+        router.push('/register/successful');
+      }
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return (
@@ -35,7 +47,7 @@ const Register = () => {
             <Input 
                 name="dni" 
                 id="dni" 
-                type="number" 
+                type="text" 
                 placeholder="DNI*" 
                 errorText={String(errors.dni?.message === undefined ? "" : errors.dni?.message)}
             />
@@ -47,6 +59,7 @@ const Register = () => {
               errorText={String(errors.email?.message === undefined ? "" : errors.email?.message)}
             />
           </FormBlock>
+          <PasswordAdvice>Usa entre 6 y 20 carácteres (debe contener al menos al menos 1 carácter especial, una mayúscula y un número</PasswordAdvice>
           <FormBlock>
             <Input
               name="password"
