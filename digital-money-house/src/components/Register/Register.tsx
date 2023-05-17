@@ -29,7 +29,7 @@ const Register = () => {
   const handleVerficationCode = async () => {
     setLoading(true);
     setError("");
-    const { email } = getValues();
+    const { email, firstname, lastname } = getValues();
     const code = Math.floor(100000 + Math.random() * 900000).toString();
     const secretKey = process.env.NEXT_PUBLIC_SECRET_KEY;
 
@@ -43,6 +43,8 @@ const Register = () => {
       body: JSON.stringify({
         email,
         code,
+        firstname,
+        lastname
       }),
     });
     let encryptedCode = CryptoJS.AES.encrypt(
