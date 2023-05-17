@@ -33,8 +33,6 @@ const Register = () => {
     const code = Math.floor(100000 + Math.random() * 900000).toString();
     const secretKey = process.env.NEXT_PUBLIC_SECRET_KEY;
 
-
-
     const response = await fetch("/api/send-mail", {
       method: "POST",
       headers: {
@@ -63,9 +61,7 @@ const Register = () => {
       );
       return setLoading(false);
     }
-
     setLoading(false);
-
     return true;
   };
 
@@ -87,6 +83,7 @@ const Register = () => {
         setError(response.error?.message);
         return setLoading(false);
       }
+      localStorage.setItem("userId", response.user_id);
       setLoading(false);
       return router.push("/register/successful");
     }

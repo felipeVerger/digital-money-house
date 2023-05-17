@@ -11,9 +11,8 @@ export interface RegisterResponse {
   account_id: string;
   email: string;
   user_id: string;
-  error:{
+  error: {
     message: string;
-
-  }
+  };
   status: number;
 }
