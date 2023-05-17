@@ -1,24 +1,24 @@
-import {connect, connection} from 'mongoose';
+import { connect, connection } from "mongoose";
 
 const conn = {
-    isConnected: false
-}
+  isConnected: false,
+};
 
 export async function dbConnect() {
-    // Chequear si ya esta conectado para reusar la conexion
-    if (conn.isConnected) return;
+  // Chequear si ya esta conectado para reusar la conexion
+  if (conn.isConnected) return;
 
-    const db = await connect(process.env.MONGO_URI as string);
+  const db = await connect(process.env.MONGO_URI as string);
 
-    conn.isConnected = Boolean(db.connections[0].readyState);
+  conn.isConnected = Boolean(db.connections[0].readyState);
 
-    console.log(db.connection.db.databaseName);
+  console.log(db.connection.db.databaseName);
 }
 
 connection.on("Connected", () => {
-    console.log("MongoDB is connected");
-})
+  console.log("MongoDB is connected");
+});
 
 connection.on("error", (err) => {
-    console.log(err);
-})
+  console.log(err);
+});
