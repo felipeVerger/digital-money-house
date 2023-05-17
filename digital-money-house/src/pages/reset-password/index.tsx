@@ -9,12 +9,9 @@ import {
 import { Title } from "../indexStyled";
 import { Input } from "@/components/Login/EmailStyle";
 import { useState } from "react";
-import { useRouter } from "next/router";
+import Head from "next/head";
 
 const ResetPassword = () => {
-  const router = useRouter();
-  const { token } = router.query;
-
   const [password, setPassword] = useState("");
   const [passwordRepeat, setPasswordRepeat] = useState("");
 
@@ -28,51 +25,13 @@ const ResetPassword = () => {
       text: "",
       error: false,
     });
-
-    if (password.length < 6) {
-      setErrors({
-        text: "La contraseña debe tener al menos 6 caracteres",
-        error: true,
-      });
-      return;
-    }
-
-    if (password !== passwordRepeat) {
-      setErrors({
-        text: "Las contraseñas no coinciden",
-        error: true,
-      });
-      return;
-    }
-
-    if (password.length === 0 || passwordRepeat.length === 0) {
-      setErrors({
-        text: "El campo no puede estar vacío",
-        error: true,
-      });
-      return;
-    }
-
-    
-
-    if (token) {
-      fetch(
-        `https://digitalmoney.ctd.academy/api/users/${userId}/reset-password`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({
-            password: password,
-          }),
-        }
-      );
-    }
   };
 
   return (
+   <>
+    <Head>
+      <title> Resetear contraseña - DMH </title>
+    </Head>
     <RegisterContainer>
       <RegisterBody>
         <Title>Resetear contraseña</Title>
@@ -113,11 +72,12 @@ const ResetPassword = () => {
           )}
 
           <SubmitButton type="button" onClick={onSubmit}>
-            Continuar
+            Confirmar
           </SubmitButton>
         </Form>
       </RegisterBody>
     </RegisterContainer>
+   </>
   );
 };
 
