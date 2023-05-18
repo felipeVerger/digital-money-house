@@ -15,10 +15,10 @@ import { registerUser } from "@/services/register/register.service";
 import { useRouter } from "next/router";
 import Spinner from "../Spinner/Spinner";
 import CryptoJS from "crypto-js";
+import { toast } from "react-hot-toast";
 
 const Register = () => {
   const router = useRouter();
-  const [error, setError] = React.useState("");
   const [loading, setLoading] = React.useState(false);
   const {
     handleSubmit,
@@ -28,7 +28,6 @@ const Register = () => {
 
   const handleVerficationCode = async () => {
     setLoading(true);
-    setError("");
     const { email, firstname, lastname } = getValues();
     const code = Math.floor(100000 + Math.random() * 900000).toString();
     const secretKey = process.env.NEXT_PUBLIC_SECRET_KEY;
@@ -60,9 +59,7 @@ const Register = () => {
     localStorage.setItem("isVerified", encryptedIsVerified);
 
     if (response.status !== 200) {
-      setError(
-        "Hubo un error al enviar el código de verificación, por favor intente nuevamente"
-      );
+      toast.error("Hubo un error al enviar el código de verificación, por favor intente nuevamente");
       return setLoading(false);
     }
 
@@ -73,7 +70,6 @@ const Register = () => {
 
   const onSubmit = async () => {
     setLoading(true);
-    setError("");
     const { dni, email, firstname, lastname, password, phone } = getValues();
     const verificationCode = await handleVerficationCode();
     if (verificationCode) {
@@ -84,9 +80,10 @@ const Register = () => {
         lastname,
         password,
         phone,
-      });
+      })
       if (response.error) {
-        setError(response.error?.message);
+        console.log(response.error);
+        toast.error(response.error);
         return setLoading(false);
       }
       setLoading(false);
@@ -183,15 +180,6 @@ const Register = () => {
             />
             <SubmitButton type="submit">Crear cuenta</SubmitButton>
           </FormBlock>
-          {error && (
-            <ErrorMessage
-              style={{
-                textAlign: "center",
-              }}
-            >
-              {error}
-            </ErrorMessage>
-          )}
         </Form>
         {loading && <Spinner />}
       </RegisterBody>

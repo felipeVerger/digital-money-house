@@ -12,6 +12,7 @@ export const schema = yup.object().shape({
     .min(8, "El Documento de identidad unica debe tener al menos 8 caracters"),
   password: yup
     .string()
+    .required("La contraseña es requerida")
     .min(6, "La contraseña debe contener al menos 6 caracteres")
     .max(20, "La contraseña no debe contener mas de 20 caracteres")
     .matches(
@@ -21,6 +22,7 @@ export const schema = yup.object().shape({
     .required("La contraseña es requerida"),
   confirmPassword: yup
     .string()
+    .required("La confirmacion de la contraseña es requerida")
     .oneOf([yup.ref("password")], "Las contraseñas deben coincidir"),
   phone: yup.string().required("El telefono es requerido"),
 });
