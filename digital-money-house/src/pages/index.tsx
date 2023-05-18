@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import { GetStaticProps, NextPage } from 'next';
+import { GetServerSideProps, NextPage } from 'next';
 import { HomeData } from '@/types/home.types';
 import useMediaQuery from '@/hooks/useMediaQuery';
 import { MainContainer, ServicesContainer, GreenBackground, ImgTabletDesktop, ImgMobile } from './indexStyled';
@@ -67,9 +67,13 @@ const Home: NextPage<HomeProps> = ({ dataDb }) => {
   );
 };
 
-export const getStaticProps: GetStaticProps = async () => {
-  const response = await fetch('http://localhost:3000/api/home-content');
-  const dataDb = await response.json();
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const res = await fetch(
+    process.env.NODE_ENV === 'development'
+      ? `http://${context.req?.headers.host}/api/home-content`
+      : `https://${context.req?.headers.host}/api/home-content`
+  );
+  const dataDb = await res.json();
 
   return {
     props: {

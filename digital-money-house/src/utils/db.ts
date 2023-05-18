@@ -7,7 +7,7 @@ export const connect = async() => {
     client = new MongoClient(process.env.MONGO_URI as string);
   }
   await client.connect();
-  console.log("Connected to MongoDB!");
+  // console.log("Connected to MongoDB!");
   return client;
 };
 
