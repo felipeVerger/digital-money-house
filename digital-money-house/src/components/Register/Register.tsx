@@ -102,6 +102,7 @@ const Register = () => {
               id="firstname"
               type="text"
               placeholder="Nombre*"
+              error={Boolean(errors?.firstname)}
               errorText={String(
                 errors.firstname?.message === undefined
                   ? ""
@@ -113,6 +114,7 @@ const Register = () => {
               id="lastname"
               type="text"
               placeholder="Apellido*"
+              error={Boolean(errors.lastname)}
               errorText={String(
                 errors.lastname?.message === undefined
                   ? ""
@@ -126,6 +128,7 @@ const Register = () => {
               id="dni"
               type="text"
               placeholder="DNI*"
+              error={Boolean(errors.dni)}
               errorText={String(
                 errors.dni?.message === undefined ? "" : errors.dni?.message
               )}
@@ -135,6 +138,7 @@ const Register = () => {
               id="email"
               type="email"
               placeholder="Correo electronico*"
+              error={Boolean(errors.email)}
               errorText={String(
                 errors.email?.message === undefined ? "" : errors.email?.message
               )}
@@ -150,6 +154,7 @@ const Register = () => {
               id="password"
               type="password"
               placeholder="Contraseña*"
+              error={Boolean(errors.password)}
               errorText={String(
                 errors.password?.message === undefined
                   ? ""
@@ -161,6 +166,7 @@ const Register = () => {
               id="confirmPassword"
               type="password"
               placeholder="Confirmar contraseña*"
+              error={Boolean(errors.confirmPassword)}
               errorText={String(
                 errors.confirmPassword?.message === undefined
                   ? ""
@@ -174,6 +180,7 @@ const Register = () => {
               id="phone"
               type="text"
               placeholder="Telefono*"
+              error={Boolean(errors.phone)}
               errorText={String(
                 errors.phone?.message === undefined ? "" : errors.phone?.message
               )}

@@ -7,10 +7,11 @@ interface InputProps {
   name: string;
   placeholder: string
   id: string
+  error?: boolean
   errorText?: string 
 }
 
-const Input: FC<InputProps> = ({ type, name, id, placeholder, errorText }) => {
+const Input: FC<InputProps> = ({ type, name, id, placeholder, error, errorText }) => {
     const { register } = useFormContext();
 
   return (
@@ -20,6 +21,7 @@ const Input: FC<InputProps> = ({ type, name, id, placeholder, errorText }) => {
             type={type} 
             id={id} 
             placeholder={placeholder} 
+            isError={error}
         />
         <ErrorMessage>{errorText}</ErrorMessage>
     </Label>

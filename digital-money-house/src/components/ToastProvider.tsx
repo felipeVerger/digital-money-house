@@ -8,7 +8,7 @@ interface ProvidersProps {
 const ToastProvider: FC<ProvidersProps> = ({ children }) => {
   return (
     <>
-        <Toaster position='top-center' toastOptions={{ style: { marginTop: "4rem"}}} reverseOrder={false}/>
+        <Toaster position='bottom-center' toastOptions={{ style: { marginBottom: "4rem"}}} reverseOrder={false}/>
         {children}
     </>
   )
