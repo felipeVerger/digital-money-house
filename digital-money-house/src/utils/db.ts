@@ -1,24 +1,21 @@
-import {connect, connection} from 'mongoose';
+import { MongoClient } from 'mongodb';
 
-const conn = {
-    isConnected: false
+let cachedClient: MongoClient | null = null;
+
+export async function connectToDatabase() {
+  if (cachedClient !== null) {
+    return cachedClient;
+  }
+
+  const client = new MongoClient(process.env.MONGO_URI as string);
+
+  try {
+    await client.connect();
+  } catch (error) {
+    console.log('Error al conectar a MongoDB Atlas', error);
+    throw error;
+  }
+
+  cachedClient = client;
+  return client;
 }
-
-export async function dbConnect() {
-    // Chequear si ya esta conectado para reusar la conexion
-    if (conn.isConnected) return;
-
-    const db = await connect(process.env.MONGO_URI as string);
-
-    conn.isConnected = Boolean(db.connections[0].readyState);
-
-    console.log(db.connection.db.databaseName);
-}
-
-connection.on("Connected", () => {
-    console.log("MongoDB is connected");
-})
-
-connection.on("error", (err) => {
-    console.log(err);
-})
