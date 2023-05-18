@@ -7,6 +7,7 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+  console.log(req.body.email);
   try {
     await sendgrid.send({
       to: req.body.email,
