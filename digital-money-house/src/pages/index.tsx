@@ -3,6 +3,7 @@ import { MainContainer, ServicesContainer, CardTitle, GreenBackground, LineTitle
 import CardHome from '@/components/CardHome/CardHome';
 import { data } from '../assets/dataLanding';
 import useMediaQuery from '@/hooks/useMediaQuery';
+import { useEffect } from 'react';
 
 const Home = () => {
   const isMobile = useMediaQuery('(max-width: 768px)');

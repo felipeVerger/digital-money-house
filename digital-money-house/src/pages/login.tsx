@@ -9,6 +9,9 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { loginSchema } from '@/components/Login/features/login.schema'
 import { LoginContainer, LoginForm } from './loginStyle'
 import { useRouter } from 'next/router'
+import { useAppDispatch } from '@/hooks/storeHooks'
+import { fetchAccountByToken } from '@/store/slices/accountSlice'
+import { fetchUserData } from '@/store/slices/userSlide'
 
 const LoginPage = () => {
 
@@ -26,6 +29,7 @@ const LoginPage = () => {
     })
     const {handleSubmit, getValues} = methods    
     const [responseValidation , setResponseValidation] = useState<LoginResponse>({})   
+    const dispatch = useAppDispatch()
 
     const router = useRouter()
     
@@ -42,7 +46,11 @@ const LoginPage = () => {
     }  
     
     useEffect(() => {
-      responseValidation.token && router.push('/')
+      responseValidation.token && (
+        localStorage.setItem('token', responseValidation.token),
+        dispatch(fetchAccountByToken(responseValidation.token)),        
+        router.push('/')
+        )
     },[responseValidation])
     
   return (
