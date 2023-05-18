@@ -79,6 +79,7 @@ export const InputS = styled.input`
 export const SubmitButton = styled.button`
     width: 100%;
     height: 50px;
+    cursor: pointer;
     background: ${props => props.theme.secondary};
     border: 1px solid #C1FD35;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
