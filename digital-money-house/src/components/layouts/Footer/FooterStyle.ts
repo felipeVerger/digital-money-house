@@ -14,7 +14,8 @@ export const FooterBody = styled.div`
     justify-content: center;
     align-items: center;
     padding-left: 1rem;
-    @media screen and (min-width: 390px){
+    
+    @media screen and (min-width: 768px){
         justify-content: flex-start;
     }
 `
