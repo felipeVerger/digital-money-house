@@ -83,11 +83,6 @@ El objetivo fundamental del proyecto es el aprendizaje y la puesta en práctica 
  - Ansible
  - Gitlab runner
  - Grafana
-
-  <p align="center">
-  <img src="" alt="flujo" width="60%" height="60%">        
-  <!--figcaption>Caption goes here</figcaption-->
-</p>
   
 #### Gestion
  - Git + Gitlab
