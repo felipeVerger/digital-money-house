@@ -6,23 +6,12 @@ import { MainContainer, ServicesContainer, GreenBackground, ImgTabletDesktop, Im
 import CardTitle from '@/components/CardTitle/CardTitle';
 import CardHome from '@/components/CardHome/CardHome';
 interface HomeProps {
-  dataDb: HomeData;
+  dataDb: HomeData[];
 }
 
 const Home: NextPage<HomeProps> = ({ dataDb }) => {
   const isMobile = useMediaQuery('(max-width: 767px)');
-  const {
-    urlMobile,
-    altMobile,
-    urlDesktop,
-    altDesktop,
-    titulo,
-    subtitulo,
-    servicio1,
-    descripcionServicio1,
-    servicio2,
-    descripcionServicio2,
-  } = dataDb;
+  const [dataHome]= dataDb
 
   return (
     <>
@@ -52,14 +41,14 @@ const Home: NextPage<HomeProps> = ({ dataDb }) => {
       </Head>
       <MainContainer>
         {isMobile ? (
-          <ImgMobile src={urlMobile} alt={altMobile} />
+          <ImgMobile src={dataHome.urlMobile} alt={dataHome.altMobile} />
         ) : (
-          <ImgTabletDesktop src={urlDesktop} alt={altDesktop} />
+          <ImgTabletDesktop src={dataHome.urlDesktop} alt={dataHome.altDesktop} />
         )}
-        <CardTitle title={titulo} subtitle={subtitulo} />
+        <CardTitle title={dataHome.titulo} subtitle={dataHome.subtitulo} />
         <ServicesContainer>
-          <CardHome title={servicio1} description={descripcionServicio1} />
-          <CardHome title={servicio2} description={descripcionServicio2} />
+          <CardHome title={dataHome.servicio1} description={dataHome.descripcionServicio1} />
+          <CardHome title={dataHome.servicio2} description={dataHome.descripcionServicio2} />
           <GreenBackground />
         </ServicesContainer>
       </MainContainer>
@@ -77,7 +66,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   return {
     props: {
-      dataDb: dataDb.data[0],
+      dataDb
     },
   };
 };
