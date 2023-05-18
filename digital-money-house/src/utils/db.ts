@@ -1,21 +1,19 @@
-import { MongoClient } from 'mongodb';
+import { MongoClient } from "mongodb";
 
-let cachedClient: MongoClient | null = null;
+let client: MongoClient | null;
 
-export async function connectToDatabase() {
-  if (cachedClient !== null) {
-    return cachedClient;
+export const connect = async() => {
+  if (!client) {
+    client = new MongoClient(process.env.MONGO_URI as string);
   }
-
-  const client = new MongoClient(process.env.MONGO_URI as string);
-
-  try {
-    await client.connect();
-  } catch (error) {
-    console.log('Error al conectar a MongoDB Atlas', error);
-    throw error;
-  }
-
-  cachedClient = client;
+  await client.connect();
+  console.log("Connected to MongoDB!");
   return client;
-}
+};
+
+export const disconnect = () => {
+  if (client) {
+    client.close();
+    client = null;
+  }
+};
