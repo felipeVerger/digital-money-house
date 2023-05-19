@@ -2,7 +2,7 @@ import Register from "@/components/Register/Register";
 import Head from "next/head";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm, FormProvider } from "react-hook-form";
-import { schema } from "./schema/schema";
+import { schema } from "../../schemas/registerSchema";
 
 const RegisterPage = () => {
   const methods = useForm({
