@@ -7,7 +7,6 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  console.log(req.body.email);
   try {
     await sendgrid.send({
       to: req.body.email,
@@ -133,10 +132,3 @@ export default async function handler(
   }
   return res.status(200).json({ error: "" });
 }
-
-// html: `
-//         <div>
-//           <h1>Verify your email</h1>
-//           <p>Your verification code is: ${req.body.code}</p>
-//         </div>
-//       `,
