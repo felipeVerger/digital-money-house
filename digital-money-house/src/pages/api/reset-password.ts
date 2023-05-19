@@ -10,7 +10,7 @@ export default async function handler(
   try {
     await sendgrid.send({
       to: req.body.email,
-      from: "registro.dmh.equipo9@gmail.com",
+      from: "registrodmh.equipo09@gmail.com",
       subject: "Restablecimiento de contraseña",
       html: `<body>
       <center class="wrapper" data-link-color="#1188E6" data-body-style="font-size:14px; font-family:arial,helvetica,sans-serif; color:#000000; background-color:#FFFFFF;">

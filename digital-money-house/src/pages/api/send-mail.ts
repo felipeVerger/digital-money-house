@@ -11,7 +11,7 @@ export default async function handler(
   try {
     await sendgrid.send({
       to: req.body.email,
-      from: "registro.dmh.equipo9@gmail.com",
+      from: "registrodmh.equipo09@gmail.com",
       subject: "Confimación de registro - Digital Money House",
       html: `<body>
       <center class="wrapper" data-link-color="#1188E6" data-body-style="font-size:14px; font-family:arial,helvetica,sans-serif; color:#000000; background-color:#FFFFFF;">
@@ -74,7 +74,9 @@ export default async function handler(
   </table><table class="module" role="module" data-type="text" border="0" cellpadding="0" cellspacing="0" width="100%" style="table-layout: fixed;" data-muid="381b61d3-c904-46bf-9ddf-d54bd2bc73fb" data-mc-module-version="2019-10-22">
     <tbody>
       <tr>
-        <td style="padding:18px 0px 18px 0px; line-height:40px; text-align:inherit; background-color:#201f22;" height="100%" valign="top" bgcolor="#201f22" role="module-content"><div><h1 style="text-align: center"><span style="color: #c1fd35">Hola ${req.body.firstname + " " + req.body.lastname}</span></h1><div></div></div></td>
+        <td style="padding:18px 0px 18px 0px; line-height:40px; text-align:inherit; background-color:#201f22;" height="100%" valign="top" bgcolor="#201f22" role="module-content"><div><h1 style="text-align: center"><span style="color: #c1fd35">Hola ${
+          req.body.firstname + " " + req.body.lastname
+        }</span></h1><div></div></div></td>
       </tr>
     </tbody>
   </table><table class="module" role="module" data-type="text" border="0" cellpadding="0" cellspacing="0" width="100%" style="table-layout: fixed;" data-muid="8450b81a-ecbd-4ae1-87a8-c5aafd7215e5" data-mc-module-version="2019-10-22">
@@ -92,7 +94,9 @@ export default async function handler(
               <tbody>
                 <tr>
                 <td align="center" bgcolor="#201f22" class="inner-td" style="border-radius:6px; font-size:16px; text-align:center; background-color:inherit;">
-                  <a href="" style="background-color:#201f22; border:2px solid #C1FD35; border-color:#C1FD35; border-radius:10px; border-width:2px; color:#C1FD35; display:inline-block; font-weight:700; letter-spacing:2px; line-height:57px; padding:12px 18px 12px 18px; text-align:center; text-decoration:none; border-style:solid; width:240px; font-size:24px;" target="_blank">${req.body.code}</a>
+                  <a href="" style="background-color:#201f22; border:2px solid #C1FD35; border-color:#C1FD35; border-radius:10px; border-width:2px; color:#C1FD35; display:inline-block; font-weight:700; letter-spacing:2px; line-height:57px; padding:12px 18px 12px 18px; text-align:center; text-decoration:none; border-style:solid; width:240px; font-size:24px;" target="_blank">${
+                    req.body.code
+                  }</a>
                 </td>
                 </tr>
               </tbody>
