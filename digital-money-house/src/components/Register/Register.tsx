@@ -80,7 +80,6 @@ const Register = () => {
         toast.error(response.error);
         return setLoading(false);
       }
-      localStorage.setItem("userId", response.user_id);
       setLoading(false);
       await handleVerficationCode()
       return router.push("/register/successful");
