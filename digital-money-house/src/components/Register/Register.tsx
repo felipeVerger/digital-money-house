@@ -76,7 +76,6 @@ const Register = () => {
         phone,
       })
       if (response.error) {
-        console.log(response.error);
         toast.error(response.error);
         return setLoading(false);
       }
