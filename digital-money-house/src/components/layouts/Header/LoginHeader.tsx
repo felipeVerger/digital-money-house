@@ -6,13 +6,11 @@ import { useAppSelector } from '@/hooks/storeHooks'
 import { getUserData } from '@/store/slices/userSlide'
 import { getAccountData, getIsUserLooged } from '@/store/slices/accountSlice'
 
-const Header: FC = () => {
+const LoginHeader: FC = () => {
   const [switchStyle, setSwitchStyle] = useState<boolean>(false);
   const actualPage: string = useRouter().pathname;
   const userData = useAppSelector(getUserData)
   const isUserLooged = useAppSelector(getIsUserLooged)
-
-  const [verifiedUser,setVerifiedUser] = useState(false)
 
 
   useEffect(() => {
@@ -23,10 +21,6 @@ const Header: FC = () => {
     }
   }, [actualPage])
 
-  useEffect(() => {
-    setVerifiedUser(true)
-  },[])
-
   return (
     <HeaderContainer switchStyle={switchStyle}>
       <HeaderBody>
@@ -36,27 +30,12 @@ const Header: FC = () => {
           ) : (
             <Logo src={LogoHome} alt='logo' width={"86.31"} height={"33"} />
           )}
-        </LogoContainer>
-        {verifiedUser && 
-        
-          actualPage !== '/login' &&         
-            <HeaderBlock>
-              <LoginButton href="/login" switchStyle={switchStyle}>
-                {switchStyle ? 'Iniciar sesión' : "Ingresar"}
-              </LoginButton>
-              {!switchStyle && (
-                <RegisterButton href="/register">
-                  Crear cuenta
-                </RegisterButton>
-              )}            
-            </HeaderBlock>        
-        
-        }
-
+        </LogoContainer>       
+           <button>Cerrar sesión</button>  
       </HeaderBody>
     </HeaderContainer>
   )
 }
 
 
-export default Header
+export default LoginHeader

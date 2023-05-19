@@ -1,6 +1,7 @@
 import { getUser } from "@/services/login/login.service";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../store";
+import { HYDRATE } from "next-redux-wrapper";
 
 export interface UserData {
     dni: number | null;
@@ -62,8 +63,12 @@ export const userSlice = createSlice({
             })
             .addCase(fetchUserData.rejected, (state : userAuthentication) => {
                 state.isLoading = false
-            })
+            })  
+            // .addCase(HYDRATE, (state: userAuthentication, action : any) => {
+            //     state.userData = action.payload.user.userData
+            // })   
     } 
+    
 })
 
 export const getUserData = (state : RootState) => state.user.userData

@@ -2,6 +2,7 @@ import { useAppDispatch } from "@/hooks/storeHooks";
 import { getAccount } from "@/services/login/login.service";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../store";
+import { HYDRATE } from "next-redux-wrapper";
 
 export interface UserAccount {    
     alias: string;
@@ -73,6 +74,9 @@ export const accountSlice = createSlice({
                 state.isLoading = false;
                 state.isLogged = false
             })
+            // .addCase(HYDRATE, (state: Authentication, action : any) => {
+            //     state.isLogged = action.payload.account.isLogged                 
+            // })  
     }
 })
 
