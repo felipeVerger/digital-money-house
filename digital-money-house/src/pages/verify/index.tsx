@@ -39,10 +39,11 @@ const Verify = () => {
         secretKey as string
       ).toString();
 
+      
       localStorage.setItem("isVerified", encryptedIsVerified);
       localStorage.removeItem("code");
 
-      router.push("/home");
+      router.push("/dashboard");
     }
     setErrors({
       text: "El código ingresado es incorrecto",

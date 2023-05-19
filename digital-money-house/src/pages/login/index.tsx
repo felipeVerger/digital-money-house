@@ -10,9 +10,10 @@ import { LoginContainer, LoginForm } from "./loginStyle";
 import { useRouter } from "next/router";
 import Spinner from "@/components/Spinner/Spinner";
 import CryptoJS from "crypto-js";
+import { fetchAccountByToken } from "@/store/slices/accountSlice";
+import { useAppDispatch } from "@/hooks/storeHooks";
 import Head from "next/head";
 import { ErrorMessage } from "@/components/Login/EmailStyle";
-import { log } from "console";
 
 const LoginPage = () => {
   const [isValidEmail, setIsValidEmail] = useState<boolean>(false);
@@ -37,10 +38,10 @@ const LoginPage = () => {
   });
 
   const router = useRouter();
+  const dispatch = useAppDispatch();
 
   const onSubmit = async () => {
     const { email, password } = getValues();
-
     try {
       setLoading(true);
       const encryptedIsVerified = localStorage.getItem("isVerified");
@@ -53,11 +54,14 @@ const LoginPage = () => {
       setResponseValidation(response);
 
       if (response.token && decryptedIsVerified === "false") {
+        localStorage.setItem("token", response.token);
+        dispatch(fetchAccountByToken(response.token));
         return router.push("/verify");
       }
       if (response.token && decryptedIsVerified === "true") {
         localStorage.setItem("token", response.token);
-        return router.push("/home");
+        dispatch(fetchAccountByToken(response.token));
+        return router.push("/dashboard");
       }
       setLoading(false);
     } catch (e: any) {
@@ -68,6 +72,8 @@ const LoginPage = () => {
   // Logica de reset password
   const resetPassword = async () => {
     const { email } = getValues();
+    setError({ error: "", isError: false });
+
     const token = Math.random().toString(36).substring(2, 15);
     if (!email) return setError({ error: "Ingrese un email", isError: true });
     setLoading(true);
@@ -103,6 +109,7 @@ const LoginPage = () => {
               <Email
                 setIsValidEmail={setIsValidEmail}
                 setLoading={setLoading}
+                setError={setError}
               />
             ) : (
               <Pass error={responseValidation?.error} />
