@@ -1,5 +1,9 @@
 import styled from 'styled-components';
 
+interface InputProps {
+    isError: boolean | undefined
+}
+
 export const RegisterContainer = styled.div`
     width: 100%;
     height: 100%;
@@ -57,16 +61,17 @@ export const Label = styled.label`
     /* flex: 1; */
 `
 
-export const InputS = styled.input`
+export const InputS = styled.input<InputProps>`
     width: 100%;
     height: 50px;
     background: #FFFFFF;
-    border: 1px solid #D2FFEC;
+    border: ${props => props.isError ? "1px solid #EE3838" : "1px solid #D2FFEC"};
     outline: none;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
     text-indent: 15px;
     font-family: 'Open Sans';
+    color: ${props => props.theme.primary};
     font-weight: 400;
     font-size: 16px;
     line-height: 134.77%;
@@ -78,17 +83,33 @@ export const InputS = styled.input`
 export const SubmitButton = styled.button`
     width: 100%;
     height: 50px;
+    cursor: pointer;
     background: ${props => props.theme.secondary};
     border: 1px solid #C1FD35;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
     margin-bottom: 2rem;
+    cursor: pointer;
     @media screen and (min-width: 768px) {
         height: 64px;
     }
 `
 
+export const PasswordAdvice = styled.p`
+    margin-top: 0;
+    margin-bottom: -10px;
+    font-family: 'Open Sans';
+    font-weight: 400;
+    font-size: 15.2px;
+    line-height: 140.62%;
+    color: #EEEAEA;
+    @media screen and (min-width: 768px) {
+        margin-top: -15px;
+        margin-bottom: -25px;
+    }
+`
+
 export const ErrorMessage = styled.small`
-    color: red;
+    color: #EE3838;
     font-size: 14px;
 `

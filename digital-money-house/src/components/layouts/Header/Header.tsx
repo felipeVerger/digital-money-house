@@ -16,7 +16,7 @@ const Header: FC = () => {
 
 
   useEffect(() => {
-    if (actualPage === '/login' || actualPage === '/register') {
+    if(actualPage === '/login' || actualPage === '/register' || actualPage === "/register/successful" || actualPage === "/verify"){
       setSwitchStyle(true);
     } else {
       setSwitchStyle(false);
@@ -37,9 +37,8 @@ const Header: FC = () => {
             <Logo src={LogoHome} alt='logo' width={"86.31"} height={"33"} />
           )}
         </LogoContainer>
-        {verifiedUser && 
-        
-          actualPage !== '/login' &&         
+        {verifiedUser &&         
+        actualPage !== '/login' && actualPage !== "/register/successful" && actualPage !== "/verify" &&          
             <HeaderBlock>
               <LoginButton href="/login" switchStyle={switchStyle}>
                 {switchStyle ? 'Iniciar sesión' : "Ingresar"}
@@ -49,10 +48,8 @@ const Header: FC = () => {
                   Crear cuenta
                 </RegisterButton>
               )}            
-            </HeaderBlock>        
-        
+            </HeaderBlock> 
         }
-
       </HeaderBody>
     </HeaderContainer>
   )
