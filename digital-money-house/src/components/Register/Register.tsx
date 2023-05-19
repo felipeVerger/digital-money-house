@@ -32,8 +32,6 @@ const Register = () => {
     const code = Math.floor(100000 + Math.random() * 900000).toString();
     const secretKey = process.env.NEXT_PUBLIC_SECRET_KEY;
 
-
-
     const response = await fetch("/api/send-mail", {
       method: "POST",
       headers: {
@@ -62,9 +60,7 @@ const Register = () => {
       toast.error("Hubo un error al enviar el código de verificación, por favor intente nuevamente");
       return setLoading(false);
     }
-
     setLoading(false);
-
     return true;
   };
 

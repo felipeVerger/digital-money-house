@@ -1,17 +1,23 @@
-import Head from 'next/head';
-import { GetServerSideProps, NextPage } from 'next';
-import { HomeData } from '@/types/home.types';
-import useMediaQuery from '@/hooks/useMediaQuery';
-import { MainContainer, ServicesContainer, GreenBackground, ImgTabletDesktop, ImgMobile } from './indexStyled';
-import CardTitle from '@/components/CardTitle/CardTitle';
-import CardHome from '@/components/CardHome/CardHome';
+import Head from "next/head";
+import { GetServerSideProps, NextPage } from "next";
+import { HomeData } from "@/types/home.types";
+import useMediaQuery from "@/hooks/useMediaQuery";
+import {
+  MainContainer,
+  ServicesContainer,
+  GreenBackground,
+  ImgTabletDesktop,
+  ImgMobile,
+} from "./indexStyled";
+import CardTitle from "@/components/CardTitle/CardTitle";
+import CardHome from "@/components/CardHome/CardHome";
 interface HomeProps {
   dataDb: HomeData[];
 }
 
 const Home: NextPage<HomeProps> = ({ dataDb }) => {
-  const isMobile = useMediaQuery('(max-width: 767px)');
-  const [dataHome]= dataDb
+  const isMobile = useMediaQuery("(max-width: 767px)");
+  const [dataHome] = dataDb;
 
   return (
     <>
@@ -43,12 +49,21 @@ const Home: NextPage<HomeProps> = ({ dataDb }) => {
         {isMobile ? (
           <ImgMobile src={dataHome.urlMobile} alt={dataHome.altMobile} />
         ) : (
-          <ImgTabletDesktop src={dataHome.urlDesktop} alt={dataHome.altDesktop} />
+          <ImgTabletDesktop
+            src={dataHome.urlDesktop}
+            alt={dataHome.altDesktop}
+          />
         )}
         <CardTitle title={dataHome.titulo} subtitle={dataHome.subtitulo} />
         <ServicesContainer>
-          <CardHome title={dataHome.servicio1} description={dataHome.descripcionServicio1} />
-          <CardHome title={dataHome.servicio2} description={dataHome.descripcionServicio2} />
+          <CardHome
+            title={dataHome.servicio1}
+            description={dataHome.descripcionServicio1}
+          />
+          <CardHome
+            title={dataHome.servicio2}
+            description={dataHome.descripcionServicio2}
+          />
           <GreenBackground />
         </ServicesContainer>
       </MainContainer>
@@ -58,7 +73,7 @@ const Home: NextPage<HomeProps> = ({ dataDb }) => {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const res = await fetch(
-    process.env.NODE_ENV === 'development'
+    process.env.NODE_ENV === "development"
       ? `http://${context.req?.headers.host}/api/home-content`
       : `https://${context.req?.headers.host}/api/home-content`
   );
@@ -66,7 +81,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   return {
     props: {
-      dataDb
+      dataDb,
     },
   };
 };

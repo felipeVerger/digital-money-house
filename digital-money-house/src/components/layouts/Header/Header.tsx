@@ -9,19 +9,27 @@ import { getAccountData, getIsUserLooged } from '@/store/slices/accountSlice'
 const Header: FC = () => {
   const [switchStyle, setSwitchStyle] = useState<boolean>(false);
   const actualPage: string = useRouter().pathname;
-  const userData = useAppSelector(getUserData)
-  const isUserLooged = useAppSelector(getIsUserLooged)
+
 
   const [verifiedUser,setVerifiedUser] = useState(false)
 
 
   useEffect(() => {
-    if(actualPage === '/login' || actualPage === '/register' || actualPage === "/register/successful" || actualPage === "/verify"){
+    if (
+      actualPage === "/login" ||
+      actualPage === "/register" ||
+      actualPage === "/register/successful" ||
+      actualPage === "/verify"
+    ) {
       setSwitchStyle(true);
     } else {
       setSwitchStyle(false);
     }
-  }, [actualPage])
+  }, [actualPage]);
+
+  useEffect(() => {
+    setVerifiedUser(true)
+  },[])
 
   useEffect(() => {
     setVerifiedUser(true)
@@ -52,8 +60,8 @@ const Header: FC = () => {
         }
       </HeaderBody>
     </HeaderContainer>
-  )
-}
+  );
+};
 
 
 export default Header

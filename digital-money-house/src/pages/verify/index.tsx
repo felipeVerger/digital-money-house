@@ -1,7 +1,6 @@
 import { ErrorMessage, Input } from "@/components/Login/EmailStyle";
 import {
   Form,
-  FormBlock,
   RegisterBody,
   RegisterContainer,
   SubmitButton,
@@ -10,6 +9,7 @@ import {
 import { useRouter } from "next/router";
 import { useState } from "react";
 import CryptoJS from "crypto-js";
+import Head from "next/head";
 
 const Verify = () => {
   const router = useRouter();
@@ -39,8 +39,11 @@ const Verify = () => {
         secretKey as string
       ).toString();
 
+      
       localStorage.setItem("isVerified", encryptedIsVerified);
-      router.push("/home");
+      localStorage.removeItem("code");
+
+      router.push("/dashboard");
     }
     setErrors({
       text: "El código ingresado es incorrecto",
@@ -55,35 +58,40 @@ const Verify = () => {
     }
   };
   return (
-    <RegisterContainer>
-      <RegisterBody>
-        <Title>Ingresá el código de verificación</Title>
-        <Form>
-          <Input
-            type="text"
-            placeholder="Codigo de verificación"
-            onChange={(e) => setCodeInput(e.target.value)}
-            error={false}
-            style={{
-              width: "100%",
-              marginTop: "20px",
-            }}
-          />
-          {errors.error && (
-            <ErrorMessage
+    <>
+      <Head>
+        <title> Verificar - DMH </title>
+      </Head>
+      <RegisterContainer>
+        <RegisterBody>
+          <Title>Ingresá el código de verificación</Title>
+          <Form>
+            <Input
+              type="text"
+              placeholder="Codigo de verificación"
+              onChange={(e) => setCodeInput(e.target.value)}
+              error={false}
               style={{
-                textAlign: "center",
+                width: "100%",
+                marginTop: "20px",
               }}
-            >
-              {errors.text}
-            </ErrorMessage>
-          )}
-          <SubmitButton type="button" onClick={onSubmit}>
-            Continuar
-          </SubmitButton>
-        </Form>
-      </RegisterBody>
-    </RegisterContainer>
+            />
+            {errors.error && (
+              <ErrorMessage
+                style={{
+                  textAlign: "center",
+                }}
+              >
+                {errors.text}
+              </ErrorMessage>
+            )}
+            <SubmitButton type="button" onClick={onSubmit}>
+              Continuar
+            </SubmitButton>
+          </Form>
+        </RegisterBody>
+      </RegisterContainer>
+    </>
   );
 };
 
