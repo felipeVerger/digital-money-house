@@ -81,7 +81,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   return {
     props: {
-      dataDb,
+      dataDb : dataDb,
     },
   };
 };
