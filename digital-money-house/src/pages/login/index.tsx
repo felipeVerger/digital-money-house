@@ -11,6 +11,8 @@ import { useRouter } from "next/router";
 import Spinner from "@/components/Spinner/Spinner";
 import CryptoJS from "crypto-js";
 import Head from "next/head";
+import { ErrorMessage } from "@/components/Login/EmailStyle";
+import { log } from "console";
 
 const LoginPage = () => {
   const [isValidEmail, setIsValidEmail] = useState<boolean>(false);
@@ -25,10 +27,14 @@ const LoginPage = () => {
       password: "",
     },
   });
-  const { handleSubmit, getValues } = methods;
   const [responseValidation, setResponseValidation] = useState<LoginResponse>(
     {}
   );
+  const { handleSubmit, getValues } = methods;
+  const [error, setError] = useState({
+    error: "",
+    isError: false,
+  });
 
   const router = useRouter();
 
@@ -50,15 +56,41 @@ const LoginPage = () => {
         return router.push("/verify");
       }
       if (response.token && decryptedIsVerified === "true") {
-        return router.push("/dashboard");
+        localStorage.setItem("token", response.token);
+        return router.push("/home");
       }
-
       setLoading(false);
     } catch (e: any) {
-      console.log(e);
+      setError({ error: "Hubo un error", isError: true });
+      setLoading(false);
     }
   };
+  // Logica de reset password
+  const resetPassword = async () => {
+    const { email } = getValues();
+    const token = Math.random().toString(36).substring(2, 15);
+    if (!email) return setError({ error: "Ingrese un email", isError: true });
+    setLoading(true);
 
+    try {
+      const response = await fetch("/api/reset-password", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          token,
+        }),
+      });
+      if (response.status === 200) {
+        router.push("/login/reset-password-success");
+      } else {
+        setError({ error: "Hubo un error", isError: true });
+      }
+    } catch (e: any) {}
+    setLoading(false);
+  };
   return (
     <>
       <Head>
@@ -74,6 +106,35 @@ const LoginPage = () => {
               />
             ) : (
               <Pass error={responseValidation?.error} />
+            )}
+            <p
+              style={{
+                color: "#fff",
+                fontSize: "14px",
+                textAlign: "center",
+                marginTop: "20px",
+              }}
+            >
+              ¿Olvidaste tu contraseña?
+              <span
+                style={{
+                  color: "#fff",
+                  fontSize: "14px",
+                  textAlign: "center",
+                  marginTop: "20px",
+                  marginLeft: "5px",
+                  cursor: "pointer",
+                  textDecoration: "underline",
+                }}
+                onClick={resetPassword}
+              >
+                Click aquí
+              </span>
+            </p>
+            {error.isError && (
+              <ErrorMessage style={{ marginTop: "10px" }}>
+                {error.error}
+              </ErrorMessage>
             )}
           </LoginForm>
         </FormProvider>

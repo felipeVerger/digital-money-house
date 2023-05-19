@@ -5,8 +5,8 @@ import {
   RegisterBody,
   RegisterContainer,
   SubmitButton,
+  Title,
 } from "@/components/Register/RegisterStyle";
-import { Title } from "../indexStyled";
 import { Input } from "@/components/Login/EmailStyle";
 import { useState } from "react";
 import Head from "next/head";

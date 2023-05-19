@@ -1,5 +1,9 @@
 import styled from 'styled-components';
 
+interface InputProps {
+    isError: boolean | undefined
+}
+
 export const RegisterContainer = styled.div`
     width: 100%;
     height: 100%;
@@ -57,11 +61,11 @@ export const Label = styled.label`
     /* flex: 1; */
 `
 
-export const InputS = styled.input`
+export const InputS = styled.input<InputProps>`
     width: 100%;
     height: 50px;
     background: #FFFFFF;
-    border: 1px solid #D2FFEC;
+    border: ${props => props.isError ? "1px solid #EE3838" : "1px solid #D2FFEC"};
     outline: none;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
@@ -106,6 +110,6 @@ export const PasswordAdvice = styled.p`
 `
 
 export const ErrorMessage = styled.small`
-    color: red;
+    color: #EE3838;
     font-size: 14px;
 `

@@ -38,35 +38,6 @@ const Email: FC<Props> = ({ setIsValidEmail, setLoading }) => {
       console.log(e);
     }
   };
-  // Logica de reset password
-  const resetPassword = async () => {
-    const { email } = getValues();
-    const token = Math.random().toString(36).substring(2, 15);
-    if (!email) return;
-    setLoading(true);
-
-    try {
-      const response = await fetch("/api/reset-password", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email,
-          token,
-        }),
-      });
-      if (response.status === 200) {
-        alert("Mail enviado correctamente");
-      } else {
-        alert("Error al enviar el mail");
-      }
-      console.log(response);
-    } catch (e: any) {
-      console.log(e);
-    }
-    setLoading(false);
-  };
 
   useEffect(() => {
     if (responseValidation.error === "invalid credentials") {

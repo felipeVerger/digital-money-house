@@ -40,6 +40,8 @@ const Verify = () => {
       ).toString();
 
       localStorage.setItem("isVerified", encryptedIsVerified);
+      localStorage.removeItem("code");
+
       router.push("/home");
     }
     setErrors({

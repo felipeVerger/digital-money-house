@@ -1,22 +1,23 @@
 import Head from "next/head";
+import { GetServerSideProps, NextPage } from "next";
+import { HomeData } from "@/types/home.types";
+import useMediaQuery from "@/hooks/useMediaQuery";
 import {
   MainContainer,
   ServicesContainer,
-  CardTitle,
   GreenBackground,
-  LineTitle,
-  Subtitle,
-  Title,
   ImgTabletDesktop,
   ImgMobile,
 } from "./indexStyled";
+import CardTitle from "@/components/CardTitle/CardTitle";
 import CardHome from "@/components/CardHome/CardHome";
-import { data } from "../assets/dataLanding";
-import useMediaQuery from "@/hooks/useMediaQuery";
-import { useState } from "react";
+interface HomeProps {
+  dataDb: HomeData[];
+}
 
-const Home = () => {
-  const isMobile = useMediaQuery("(max-width: 768px)");
+const Home: NextPage<HomeProps> = ({ dataDb }) => {
+  const isMobile = useMediaQuery("(max-width: 767px)");
+  const [dataHome] = dataDb;
 
   return (
     <>
@@ -46,34 +47,43 @@ const Home = () => {
       </Head>
       <MainContainer>
         {isMobile ? (
-          <ImgMobile src="/landingMobile.png" alt="image background" />
+          <ImgMobile src={dataHome.urlMobile} alt={dataHome.altMobile} />
         ) : (
           <ImgTabletDesktop
-            src="/landingDesktopTablet.png"
-            alt="image background"
+            src={dataHome.urlDesktop}
+            alt={dataHome.altDesktop}
           />
         )}
-        <CardTitle>
-          <Title>De ahora en adelante, hacés más con tu dinero</Title>
-          <LineTitle />
-          <Subtitle>
-            Tu nueva <b>billetera virtual</b>
-          </Subtitle>
-        </CardTitle>
+        <CardTitle title={dataHome.titulo} subtitle={dataHome.subtitulo} />
         <ServicesContainer>
           <CardHome
-            title={data.service1Title}
-            description={data.service1Description}
+            title={dataHome.servicio1}
+            description={dataHome.descripcionServicio1}
           />
           <CardHome
-            title={data.service2Title}
-            description={data.service2Description}
+            title={dataHome.servicio2}
+            description={dataHome.descripcionServicio2}
           />
           <GreenBackground />
         </ServicesContainer>
       </MainContainer>
     </>
   );
+};
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const res = await fetch(
+    process.env.NODE_ENV === "development"
+      ? `http://${context.req?.headers.host}/api/home-content`
+      : `https://${context.req?.headers.host}/api/home-content`
+  );
+  const dataDb = await res.json();
+
+  return {
+    props: {
+      dataDb,
+    },
+  };
 };
 
 export default Home;
