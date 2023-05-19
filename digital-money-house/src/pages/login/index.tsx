@@ -10,6 +10,8 @@ import { LoginContainer, LoginForm } from "./loginStyle";
 import { useRouter } from "next/router";
 import Spinner from "@/components/Spinner/Spinner";
 import CryptoJS from "crypto-js";
+import { fetchAccountByToken } from "@/store/slices/accountSlice";
+import { useAppDispatch } from "@/hooks/storeHooks";
 
 const LoginPage = () => {
   const [isValidEmail, setIsValidEmail] = useState<boolean>(false);
@@ -30,6 +32,7 @@ const LoginPage = () => {
   );
 
   const router = useRouter();
+  const dispatch = useAppDispatch()
 
   const onSubmit = async () => {
     const { email, password } = getValues();
@@ -45,10 +48,14 @@ const LoginPage = () => {
       const response = await getLogin({ email, password });
       setResponseValidation(response);
 
+     
+
       if (response.token && decryptedIsVerified === "false") {
         return router.push("/verify");
       }
       if (response.token && decryptedIsVerified === "true") {
+        localStorage.setItem('token', response.token);
+        dispatch(fetchAccountByToken(response.token));
         return router.push("/dashboard");
       }
 
