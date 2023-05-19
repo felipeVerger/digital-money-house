@@ -6,7 +6,7 @@ import React, { useEffect, useState } from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { loginSchema } from "@/components/Login/features/login.schema";
-import { LoginContainer, LoginForm } from "./loginStyle";
+import { LoginContainer, LoginForm } from "../../styles/pagesStyles/loginStyle";
 import { useRouter } from "next/router";
 import { useAppDispatch } from "@/hooks/storeHooks";
 import { fetchAccountByToken } from "@/store/slices/accountSlice";
@@ -19,7 +19,7 @@ const LoginPage = () => {
     isError: false,
   });
   const [loading, setLoading] = useState<boolean>(false);
-  
+
   const methods = useForm({
     mode: "all",
     resolver: yupResolver(loginSchema),
@@ -58,7 +58,11 @@ const LoginPage = () => {
       <FormProvider {...methods}>
         <LoginForm onSubmit={handleSubmit(onSubmit)}>
           {!isValidEmail ? (
-            <Email setIsValidEmail={setIsValidEmail} setError={setError} setLoading={setLoading} />
+            <Email
+              setIsValidEmail={setIsValidEmail}
+              setError={setError}
+              setLoading={setLoading}
+            />
           ) : (
             <Pass error={responseValidation?.error} />
           )}

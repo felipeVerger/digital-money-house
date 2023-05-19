@@ -6,7 +6,7 @@ import React, { useState } from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { loginSchema } from "@/components/Login/features/login.schema";
-import { LoginContainer, LoginForm } from "./loginStyle";
+import { LoginContainer, LoginForm } from "../../styles/pagesStyles/loginStyle";
 import { useRouter } from "next/router";
 import Spinner from "@/components/Spinner/Spinner";
 import CryptoJS from "crypto-js";

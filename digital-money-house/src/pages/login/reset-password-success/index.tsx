@@ -5,7 +5,7 @@ import {
   ContinueButton,
   Paragraph,
   SuccessContainer,
-} from "@/pages/register/successful/SuccessfulStyle";
+} from "@/styles/pagesStyles/SuccessfulStyle";
 import { Title } from "@/components/CardTitle/CardTitleStyled";
 import Head from "next/head";
 
