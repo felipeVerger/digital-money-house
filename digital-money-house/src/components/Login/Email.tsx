@@ -4,15 +4,15 @@ import { useFormContext, useWatch } from "react-hook-form";
 import { useRouter } from "next/router";
 import { LoginResponse } from "@/types/login.types";
 import { getLogin } from "@/services/login/login.service";
-import Spinner from "../Spinner/Spinner";
 
 interface Props {
   //onValidate : () => void
   setIsValidEmail: (arg: boolean) => void;
   setLoading: (arg: boolean) => void;
+  setError: (arg: { error: string; isError: boolean }) => void;
 }
 
-const Email: FC<Props> = ({ setIsValidEmail, setLoading }) => {
+const Email: FC<Props> = ({ setIsValidEmail, setLoading, setError }) => {
   const { register, getValues } = useFormContext();
   const router = useRouter();
   const email = useWatch({ name: "email" });
@@ -27,6 +27,11 @@ const Email: FC<Props> = ({ setIsValidEmail, setLoading }) => {
   const validateEmail = async () => {
     const { email } = getValues();
     setLoading(true);
+    setError({
+      error: "",
+      isError: false,
+    });
+
     try {
       const response = await getLogin({
         email,
@@ -64,7 +69,6 @@ const Email: FC<Props> = ({ setIsValidEmail, setLoading }) => {
       {responseValidation?.error && (
         <ErrorMessage>Usuario inexistente. Vuelve a intentarlo</ErrorMessage>
       )}
-     
     </>
   );
 };

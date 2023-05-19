@@ -15,10 +15,10 @@ import { registerUser } from "@/services/register/register.service";
 import { useRouter } from "next/router";
 import Spinner from "../Spinner/Spinner";
 import CryptoJS from "crypto-js";
+import { toast } from "react-hot-toast";
 
 const Register = () => {
   const router = useRouter();
-  const [error, setError] = React.useState("");
   const [loading, setLoading] = React.useState(false);
   const {
     handleSubmit,
@@ -28,12 +28,9 @@ const Register = () => {
 
   const handleVerficationCode = async () => {
     setLoading(true);
-    setError("");
     const { email, firstname, lastname } = getValues();
     const code = Math.floor(100000 + Math.random() * 900000).toString();
     const secretKey = process.env.NEXT_PUBLIC_SECRET_KEY;
-
-
 
     const response = await fetch("/api/send-mail", {
       method: "POST",
@@ -60,23 +57,16 @@ const Register = () => {
     localStorage.setItem("isVerified", encryptedIsVerified);
 
     if (response.status !== 200) {
-      setError(
-        "Hubo un error al enviar el código de verificación, por favor intente nuevamente"
-      );
+      toast.error("Hubo un error al enviar el código de verificación, por favor intente nuevamente");
       return setLoading(false);
     }
-
     setLoading(false);
-
     return true;
   };
 
   const onSubmit = async () => {
     setLoading(true);
-    setError("");
     const { dni, email, firstname, lastname, password, phone } = getValues();
-    const verificationCode = await handleVerficationCode();
-    if (verificationCode) {
       const response = await registerUser({
         dni,
         email,
@@ -84,14 +74,15 @@ const Register = () => {
         lastname,
         password,
         phone,
-      });
+      })
       if (response.error) {
-        setError(response.error?.message);
+        console.log(response.error);
+        toast.error(response.error);
         return setLoading(false);
       }
       setLoading(false);
+      await handleVerficationCode()
       return router.push("/register/successful");
-    }
   };
 
   return (
@@ -105,6 +96,7 @@ const Register = () => {
               id="firstname"
               type="text"
               placeholder="Nombre*"
+              error={Boolean(errors?.firstname)}
               errorText={String(
                 errors.firstname?.message === undefined
                   ? ""
@@ -116,6 +108,7 @@ const Register = () => {
               id="lastname"
               type="text"
               placeholder="Apellido*"
+              error={Boolean(errors.lastname)}
               errorText={String(
                 errors.lastname?.message === undefined
                   ? ""
@@ -129,6 +122,7 @@ const Register = () => {
               id="dni"
               type="text"
               placeholder="DNI*"
+              error={Boolean(errors.dni)}
               errorText={String(
                 errors.dni?.message === undefined ? "" : errors.dni?.message
               )}
@@ -138,6 +132,7 @@ const Register = () => {
               id="email"
               type="email"
               placeholder="Correo electronico*"
+              error={Boolean(errors.email)}
               errorText={String(
                 errors.email?.message === undefined ? "" : errors.email?.message
               )}
@@ -153,6 +148,7 @@ const Register = () => {
               id="password"
               type="password"
               placeholder="Contraseña*"
+              error={Boolean(errors.password)}
               errorText={String(
                 errors.password?.message === undefined
                   ? ""
@@ -164,6 +160,7 @@ const Register = () => {
               id="confirmPassword"
               type="password"
               placeholder="Confirmar contraseña*"
+              error={Boolean(errors.confirmPassword)}
               errorText={String(
                 errors.confirmPassword?.message === undefined
                   ? ""
@@ -177,21 +174,13 @@ const Register = () => {
               id="phone"
               type="text"
               placeholder="Telefono*"
+              error={Boolean(errors.phone)}
               errorText={String(
                 errors.phone?.message === undefined ? "" : errors.phone?.message
               )}
             />
             <SubmitButton type="submit">Crear cuenta</SubmitButton>
           </FormBlock>
-          {error && (
-            <ErrorMessage
-              style={{
-                textAlign: "center",
-              }}
-            >
-              {error}
-            </ErrorMessage>
-          )}
         </Form>
         {loading && <Spinner />}
       </RegisterBody>

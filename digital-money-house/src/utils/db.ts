@@ -1,24 +1,19 @@
-import { connect, connection } from "mongoose";
+import { MongoClient } from "mongodb";
 
-const conn = {
-  isConnected: false,
+let client: MongoClient | null;
+
+export const connect = async() => {
+  if (!client) {
+    client = new MongoClient(process.env.MONGO_URI as string);
+  }
+  await client.connect();
+  console.log("Connected to MongoDB!");
+  return client;
 };
 
-export async function dbConnect() {
-  // Chequear si ya esta conectado para reusar la conexion
-  if (conn.isConnected) return;
-
-  const db = await connect(process.env.MONGO_URI as string);
-
-  conn.isConnected = Boolean(db.connections[0].readyState);
-
-  console.log(db.connection.db.databaseName);
-}
-
-connection.on("Connected", () => {
-  console.log("MongoDB is connected");
-});
-
-connection.on("error", (err) => {
-  console.log(err);
-});
+export const disconnect = () => {
+  if (client) {
+    client.close();
+    client = null;
+  }
+};

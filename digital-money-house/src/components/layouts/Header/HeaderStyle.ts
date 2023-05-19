@@ -1,3 +1,4 @@
+import { themes } from '@/assets/theme';
 import Image from 'next/image';
 import Link from 'next/link';
 import styled from 'styled-components';
@@ -63,4 +64,24 @@ export const RegisterButton = styled(Link)`
     border-radius: 5px;
     display: grid;
     place-content: center;
+`
+
+export const LogoutButton = styled.button `    
+    color: #FFF;
+    width: 131px;
+    height: 40px;
+    font-weight: 700;
+    font-size: 14px;
+    text-decoration: none;    
+    background-color: transparent;    
+    border:1px solid #FFF;
+    border-radius: 5px;
+    display: grid;
+    place-content: center;
+    cursor: pointer;
+`
+
+export const WellcomeUser = styled.p`
+    color: ${themes.light.secondary};
+    margin-right: 10px;
 `

@@ -1,3 +1,4 @@
+import { screenSize } from '@/assets/theme';
 import styled from 'styled-components';
 
 export const ServiceCard = styled.div`
@@ -5,29 +6,39 @@ export const ServiceCard = styled.div`
     border-radius: 25px;
     width: 90%;
     padding: 20px 20px;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
 
-    @media (min-width: 768px) {
-        width: 70%;
+    @media (min-width: ${screenSize.tablet}) {
+        width: 65%;
     }
 
-    @media (min-width: 1440px) {
+    @media (min-width: ${screenSize.laptop}) {
         align-self: flex-start;
         margin-bottom: 0px;
-        width: 35%;
-        min-height: 75%;
+        width: 40%;
+        min-height: 65%;
         margin-left: 10px;
         padding: 30px 30px;
+    }
+
+    @media (min-width: ${screenSize.laptopL}) {
+        width: 35%;
+        min-height: 85%;
     }
 `
 
 export const ServiceTitle = styled.h3`
     color: ${(props => props.theme.primary)};
-    font-size: 28px;
+    font-size: 1.4rem;
     font-weight: 700;
+    letter-spacing: -0.05rem;
 
-    @media (min-width: 768px) {
-        font-size: 34px;
+    @media (min-width: ${screenSize.laptop}) {
+        font-size: 1.6rem;
+    }
+
+    @media (min-width: ${screenSize.laptopL}) {
+        font-size: 1.8rem;
     }
 `
 
@@ -40,6 +51,10 @@ export const ServiceLine = styled.div`
 
 export const ServiceDescription = styled.p`
     color: ${(props => props.theme.primary)};
-    font-size: 20px;
+    font-size: 0.9rem;
     font-weight: 500;
+
+    @media (min-width: ${screenSize.laptopL}) {
+        font-size: 1.1rem;
+    }
 `
