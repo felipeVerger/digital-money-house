@@ -8,7 +8,7 @@ import {
   GreenBackground,
   ImgTabletDesktop,
   ImgMobile,
-} from "./indexStyled";
+} from "../styles/pagesStyles/indexStyled";
 import CardTitle from "@/components/CardTitle/CardTitle";
 import CardHome from "@/components/CardHome/CardHome";
 interface HomeProps {

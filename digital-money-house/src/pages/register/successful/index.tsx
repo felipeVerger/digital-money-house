@@ -5,30 +5,29 @@ import {
   Paragraph,
   SuccessContainer,
   Title,
-} from "./SuccessfulStyle";
+} from "../../../styles/pagesStyles/SuccessfulStyle";
 import { Check } from "@/assets";
 import Head from "next/head";
-
 
 const RegisterSuccessful = () => {
   const router = useRouter();
 
   return (
     <>
-    <Head>
-      <title>Registro Exitoso</title>
-    </Head>
-    <SuccessContainer>
-      <Title>Registro Exitoso</Title>
-      <CheckImage src={Check} alt="success-image" priority />
-      <Paragraph>
-        Hemos enviado un correo de confirmación para validar tu email, por favor
-        revisalo para iniciar sesión.
-      </Paragraph>
-      <ContinueButton onClick={() => router.push("/login")} type="button">
-        Continuar
-      </ContinueButton>
-    </SuccessContainer>
+      <Head>
+        <title>Registro Exitoso</title>
+      </Head>
+      <SuccessContainer>
+        <Title>Registro Exitoso</Title>
+        <CheckImage src={Check} alt="success-image" priority />
+        <Paragraph>
+          Hemos enviado un correo de confirmación para validar tu email, por
+          favor revisalo para iniciar sesión.
+        </Paragraph>
+        <ContinueButton onClick={() => router.push("/login")} type="button">
+          Continuar
+        </ContinueButton>
+      </SuccessContainer>
     </>
   );
 };
