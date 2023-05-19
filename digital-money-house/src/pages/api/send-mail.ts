@@ -7,11 +7,10 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  console.log(req.body.email);
   try {
     await sendgrid.send({
       to: req.body.email,
-      from: "registro.dmh.equipo9@gmail.com",
+      from: "registrodmh.equipo09@gmail.com",
       subject: "Confimación de registro - Digital Money House",
       html: `<body>
       <center class="wrapper" data-link-color="#1188E6" data-body-style="font-size:14px; font-family:arial,helvetica,sans-serif; color:#000000; background-color:#FFFFFF;">
@@ -133,10 +132,3 @@ export default async function handler(
   }
   return res.status(200).json({ error: "" });
 }
-
-// html: `
-//         <div>
-//           <h1>Verify your email</h1>
-//           <p>Your verification code is: ${req.body.code}</p>
-//         </div>
-//       `,
