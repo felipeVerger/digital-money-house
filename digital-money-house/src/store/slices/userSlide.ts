@@ -50,6 +50,11 @@ export const userSlice = createSlice({
     name : 'user',
     initialState,
     reducers : {
+        resetuser : () => {
+            return {
+                ...initialState
+            }
+        }
 
     },
     extraReducers: (builder) => {
@@ -70,5 +75,7 @@ export const userSlice = createSlice({
     } 
     
 })
+
+export const {resetuser} = userSlice.actions
 
 export const getUserData = (state : RootState) => state.user.userData

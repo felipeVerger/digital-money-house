@@ -52,7 +52,7 @@ export const accountSlice = createSlice({
             localStorage.removeItem('token');
             return {
                 ...initialState,
-                //isLogged : false
+                isLogged : false                
             }
         } 
 
@@ -79,6 +79,8 @@ export const accountSlice = createSlice({
             // })  
     }
 })
+
+export const {resetAuthentication} = accountSlice.actions
 
 export const getAccountData = (state : RootState) => state.account.userAccount
 export const getIsUserLooged = (state : RootState) => state.account.isLogged
