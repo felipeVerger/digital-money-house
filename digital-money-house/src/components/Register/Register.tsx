@@ -67,8 +67,6 @@ const Register = () => {
   const onSubmit = async () => {
     setLoading(true);
     const { dni, email, firstname, lastname, password, phone } = getValues();
-    const verificationCode = await handleVerficationCode();
-    if (verificationCode) {
       const response = await registerUser({
         dni,
         email,
@@ -84,8 +82,8 @@ const Register = () => {
       }
       localStorage.setItem("userId", response.user_id);
       setLoading(false);
+      await handleVerficationCode()
       return router.push("/register/successful");
-    }
   };
 
   return (
